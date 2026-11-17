@@ -1,0 +1,29 @@
+groups:
+  - name: ml-monitoring
+    rules:
+      - alert: ModelPerformanceDegraded
+        expr: ml_model_accuracy < 0.85
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Model accuracy is below the configured threshold"
+          description: "Current accuracy is {{ $value }}; expected at least 0.85."
+
+      - alert: DataDriftDetected
+        expr: ml_data_drift_score > 0.20
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Data drift threshold exceeded"
+          description: "Current drift score is {{ $value }}; threshold is 0.20."
+
+      - alert: AnomalySpike
+        expr: ml_anomaly_count > 5
+        for: 5m
+        labels:
+          severity: critical
+        annotations:
+          summary: "Anomaly count is above the configured threshold"
+          description: "Current anomaly count is {{ $value }}; threshold is 5."

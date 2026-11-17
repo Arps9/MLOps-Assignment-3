@@ -1,0 +1,139 @@
+{
+  "id": null,
+  "uid": "mlops-monitoring",
+  "title": "MLOps Model Monitoring",
+  "tags": [
+    "mlops",
+    "prometheus"
+  ],
+  "timezone": "browser",
+  "schemaVersion": 39,
+  "version": 1,
+  "refresh": "15s",
+  "panels": [
+    {
+      "id": 1,
+      "type": "timeseries",
+      "title": "Model Accuracy",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "ml_model_accuracy",
+          "legendFormat": "accuracy",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0,
+          "max": 1
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 2,
+      "type": "timeseries",
+      "title": "Data Drift Score",
+      "gridPos": {
+        "h": 8,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "targets": [
+        {
+          "expr": "ml_data_drift_score",
+          "legendFormat": "drift score",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "min": 0
+        },
+        "overrides": []
+      }
+    },
+    {
+      "id": 3,
+      "type": "timeseries",
+      "title": "Detected Anomalies (latest batch)",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 0,
+        "y": 8
+      },
+      "targets": [
+        {
+          "expr": "ml_anomaly_count",
+          "legendFormat": "anomalies",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "type": "timeseries",
+      "title": "Prediction Volume",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 8
+      },
+      "targets": [
+        {
+          "expr": "rate(ml_prediction_total[1m])",
+          "legendFormat": "predictions/sec",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "type": "timeseries",
+      "title": "Prediction Latency",
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 8
+      },
+      "targets": [
+        {
+          "expr": "rate(ml_prediction_latency_seconds_sum[1m]) / rate(ml_prediction_latency_seconds_count[1m])",
+          "legendFormat": "seconds/row",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "type": "stat",
+      "title": "Monitoring Batches",
+      "gridPos": {
+        "h": 4,
+        "w": 8,
+        "x": 0,
+        "y": 16
+      },
+      "targets": [
+        {
+          "expr": "ml_monitoring_batch_total",
+          "refId": "A"
+        }
+      ]
+    }
+  ],
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  }
+}
